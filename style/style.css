@@ -617,9 +617,6 @@ header{
   transform: scale(1.1);
 }
 
-#lightbox{
-}
-
 .animation_fadein{
 	-webkit-animation: scale-in-center 0.25s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 	        animation: scale-in-center 0.25s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
