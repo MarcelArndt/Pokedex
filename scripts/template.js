@@ -1,4 +1,4 @@
-function templatePokeCard(id, number, colorTheme, types){
+function templatePokeCard(id, number, colorTheme, types, name){
     return `<section class="pokemonCard ${colorTheme}" id="${id}">
     <div class="pokemonCardMenu">
       <div class="menu_icon"><img src="./img/icons/menu.png"></div>
@@ -9,7 +9,7 @@ function templatePokeCard(id, number, colorTheme, types){
     </div>
     <img src="./img/pokeball_small_card.png">
       <div class="pokemonCardId">#${number}</div>
-      <div class="pokemonCardName">${loadedPokeArray[id]["name"]}</div>
+      <div class="pokemonCardName">${name}</div>
       <div class="pokemonCardType"><ul id="470_type">${types}</ul></div>
       <div class="card_image"><img src="${loadedPokeArray[id]["sprites"]["other"]["official-artwork"]["front_default"]}"></div>
     </section>`

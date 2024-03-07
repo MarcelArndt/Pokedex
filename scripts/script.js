@@ -1,14 +1,13 @@
-let currentPokeCounter = 150;
+let currentPokeCounter = 1;
 let currentposition = 0;
 let loadedPokeArray = [];
 let additionaInfos =  [];
 let content = "";
-const numberOfSteps = 60
 
 function init(){
     content = document.getElementById("content");
     resetContent();
-    pullPokemons()
+    pullRotation(25);
 }
 
 
@@ -16,19 +15,26 @@ function resetContent(){
     content.innerHTML = "";
 }
 
-
-async function pullPokemons(){
-    for (let i=0; i <= numberOfSteps; i++){
-    let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${currentPokeCounter}/`);
-    currentPokemon = await response.json()
-    currentPokeCounter++;
-    loadedPokeArray.push(currentPokemon);
-    }
-    await renderPokemonCard();
+async function toTitleName(){
+    let name = await loadedPokeArray[currentposition]["name"];
+    let titledName = name[0].toUpperCase() + name.slice(1);
+    return titledName;
 }
 
 
-function buildNumber(){
+async function pullPokemons(numberOfSteps){
+    for (let i=0; i <= numberOfSteps; i++){
+    let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${currentPokeCounter}`);
+    currentPokemon = await response.json();
+    currentPokeCounter++;
+    loadedPokeArray.push(currentPokemon);
+    }
+    await renderPokemonCard(numberOfSteps);
+
+}
+
+
+async function buildNumber(){
     let newId = loadedPokeArray[currentposition]["id"];
     let stringNumber = newId.toString();
     for(i=0; stringNumber.length < 3; i++){
@@ -54,16 +60,23 @@ async function buildTypes(){
 }
 
 
-async function renderPokemonCard(){
-    for (let i=0; i <= numberOfSteps; i++){
+async function renderPokemonCard(numberOfSteps){
+    for (let i=1; i <= numberOfSteps; i++){
         let number = await buildNumber();
-        let types =  await buildTypes()
-        let colorTheme = await buildColorTheme()
-        content.innerHTML += templatePokeCard(currentposition, number, colorTheme, types);
+        let types =  await buildTypes();
+        let colorTheme = await buildColorTheme();
+        let name = await toTitleName();
+        content.innerHTML += templatePokeCard(currentposition, number, colorTheme, types, name);
         currentposition++;
     }
 }
 
+
+async function pullRotation(number){
+    for (let i = 1; i <= number;i++){
+       await pullPokemons(1);
+    }
+}
 console.log(loadedPokeArray);
 
 
