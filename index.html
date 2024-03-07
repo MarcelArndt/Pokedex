@@ -14,13 +14,16 @@
 <body onload="init()">
   <div class="main_wrapper">
 
-    <section class="popup_lightbox disable">
+    <div id="lightbox_content">
+
+    <div id="blackbox">
+    <div id="lightbox" class="popup_lightbox">
       <div class="content_wrapper">
 
         <div class="boxhead cyan"> 
           <nav class="boxheadnav">
             <ul>
-              <li><img src="./img/icons/x.png"></li>
+              <li onclick="closeLightbox()"><img src="./img/icons/x.png"></li>
               <li><img src="./img/icons/star.png"></li>
               <li><img src="./img/icons/pokeball.png"></li>
             </ul>
@@ -39,10 +42,13 @@
         
         <div class="mainarea"></div>
       </div>
-    </section>
+    </div>
+  </div>
+
+  </div>
 
 
-    <header>
+    <header id="navbar" class="addblur">
       <div class="content_wrapper">
         <div class="headarea">
         <div class="logo"><img src="./img/logo.png"></div>
@@ -58,7 +64,7 @@
 
     <section class="fgrow">
       <div class="content_wrapper">
-        <div id="content" class="">     
+        <div id="content" class="addblur">     
         
         <section class="pokemonCard red" id="470">
           <div class="pokemonCardMenu">
