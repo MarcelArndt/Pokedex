@@ -1,8 +1,11 @@
 let currentPokeCounter = 1;
 let currentposition = 0;
 let loadedPokeArray = [];
-let additionaInfos =  [];
+let iscaught =  []; // nur die reinen id's
+let isliked =  []; // nur die reinen id's
 let content = "";
+
+
 
 function init(){
     content = document.getElementById("content");
@@ -62,15 +65,83 @@ async function buildTypes(){
 }
 
 
+function ignorclick(event){
+    event.stopPropagation();
+}
+
+
+function checkIsliked(id){
+    id = Number(id);
+    let checkedisliked = isliked.includes(id);
+    let imageLink = "./img/icons/star.png"
+    if (checkedisliked){
+        imageLink = "./img/icons/star-fill.png"
+    }
+    return imageLink
+}
+
+
+function checkIscaught(id){
+    id = Number(id);
+    let checkedisCaught = iscaught.includes(id);
+    let imageLink = "./img/icons/pokeball.png"
+    if (checkedisCaught){
+        imageLink = "./img/icons/pokeball_filled.png"
+    }
+    return imageLink
+}
+
+
+async function switchIsliked(id){
+    id = Number(id);
+    let checkedisliked = isliked.includes(id);
+    if (!checkedisliked){
+        isliked.push(id);
+    }else{
+        let myIndex = isliked.indexOf(id);
+        isliked.splice(myIndex, 1);
+    }
+    refreshPokemonCard(id);
+}
+
+
+async function switchIsCaught(id){
+    id = Number(id);
+    let checkedIsCaught = iscaught.includes(id);
+    if (!checkedIsCaught){
+        iscaught.push(id);
+    }else{
+        let myIndex = iscaught.indexOf(id);
+        iscaught.splice(myIndex, 1);
+    }
+    refreshPokemonCard(id);
+}
+
+
 async function renderPokemonCard(numberOfSteps){
     for (let i=1; i <= numberOfSteps; i++){
         await buildNumber();
         await buildTypes();
         await buildColorTheme();
         await toTitleName();
-        content.innerHTML += templatePokeCard(currentposition);
+        let imageForFav =  checkIsliked(currentposition);
+        let imageForCatch =  checkIscaught(currentposition);
+        content.innerHTML += templatePokeCard(currentposition, imageForFav, imageForCatch);
         currentposition++;
     }
+}
+
+
+async function refreshPokemonCard(id){
+    let elemenet = document.getElementById(`${id}`);
+    elemenet.innerHTML = "";
+    let imageForFav = checkIsliked(id);
+    let imageForCatch =  checkIscaught(id);
+    elemenet.innerHTML += refreshTemplatePokeCard(id, imageForFav, imageForCatch);
+    try{
+        let lightBoxNav = document.getElementById("lightboxnav");
+        lightBoxNav.innerHTML = templateLightboxNav(id);
+    }catch{}
 }
 
 
@@ -109,6 +180,7 @@ function closeLightbox(){
     setTimeout(resetLightboxContent, 250);
 }
 
+
 function openLightbox(id){
     let lightboxContent = document.getElementById("lightbox_content");
     let header = document.getElementById("navbar");
@@ -124,21 +196,6 @@ console.log(loadedPokeArray);
 
 /* ToDo: Karte erstellen -->
 
-        Pokemon anhand von Nummer pullen
-        erst 40 ziehen
-        Pokemon in array pushen
-        layout aufbauen
-        nach layout weitere 40 ziehen.
-
-            - Name
-            - Id
-            - Typ
-            - Fähigkeiten
-            - Attacken
-            - Evolotion
-            - Werte
-            - Bild
-            - IsLiked?
-            - IsTeam?
+    jmn
             
 */

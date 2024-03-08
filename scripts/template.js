@@ -1,18 +1,24 @@
-function templatePokeCard(id){
-    return `<section onclick="openLightbox('${id}')" class="pokemonCard ${loadedPokeArray[id]["colorTheme"]}" id="${id}">
-    <div class="pokemonCardMenu">
-      <div class="menu_icon"><img src="./img/icons/menu.png"></div>
-      <ul>
-        <li class="fav"><img src="./img/icons/star-fill.png"></li>
-        <li class="team"><img src="./img/icons/pokeball.png"></li>
-      </ul>
-    </div>
-    <img src="./img/pokeball_small_card.png">
-      <div class="pokemonCardId">#${loadedPokeArray[id]["id"]}</div>
-      <div class="pokemonCardName">${loadedPokeArray[id]["name"]}</div>
-      <div class="pokemonCardType"><ul id="470_type">${loadedPokeArray[id]["typeHTML"]}</ul></div>
-      <div class="card_image"><img src="${loadedPokeArray[id]["sprites"]["other"]["official-artwork"]["front_default"]}"></div>
-    </section>`;
+function templatePokeCard(id, imageForFav, imageForCatch){
+  let newcontent = `<section id="${id}">` + refreshTemplatePokeCard(id, imageForFav, imageForCatch) + `</section>`;
+  return newcontent;
+}
+
+
+function refreshTemplatePokeCard(id, imageForFav, imageForCatch){
+  return `<div onclick="openLightbox('${id}')" class="pokemonCard ${loadedPokeArray[id]["colorTheme"]}">
+  <div onclick="ignorclick(event)" class="pokemonCardMenu">
+    <div class="menu_icon"><img src="./img/icons/menu.png"></div>
+    <ul>
+      <li class="fav"><img src="${imageForFav}" onclick="switchIsliked('${id}')"></li>
+      <li class="team"><img src="${imageForCatch}" onclick="switchIsCaught('${id}')"></li>
+    </ul>
+  </div>
+  <img src="./img/pokeball_small_card.png">
+    <div class="pokemonCardId">#${loadedPokeArray[id]["id"]}</div>
+    <div class="pokemonCardName">${loadedPokeArray[id]["name"]}</div>
+    <div class="pokemonCardType"><ul id="470_type">${loadedPokeArray[id]["typeHTML"]}</ul></div>
+    <div class="card_image"><img src="${loadedPokeArray[id]["sprites"]["other"]["official-artwork"]["front_default"]}"></div>
+  </div>`;
 }
 
 
@@ -22,12 +28,8 @@ function templatePokeLightBox(id){
     <div class="content_wrapper">
 
       <div class="boxhead ${loadedPokeArray[id]["colorTheme"]}"> 
-        <nav class="boxheadnav">
-          <ul>
-            <li onclick="closeLightbox()"><img src="./img/icons/x.png"></li>
-            <li><img src="./img/icons/star.png"></li>
-            <li><img src="./img/icons/pokeball.png"></li>
-          </ul>
+        <nav id="lightboxnav" class="boxheadnav">
+        ` + templateLightboxNav(id) + `  
         </nav>
         <div class="boxheadname">${loadedPokeArray[id]["name"]}</div>
         <div class="boxheadtype"><ul>${loadedPokeArray[id]["typeHTML"]}</ul></div>
@@ -40,11 +42,21 @@ function templatePokeLightBox(id){
           <div class="lightbox_image"><img src="${loadedPokeArray[id]["sprites"]["other"]["official-artwork"]["front_default"]}"><img class="shadow" src="./img/shadow.png"></div>
         </div>
       </div>
-      
+
       <div class="mainarea"></div>
     </div>
   </div>
 </div>`;
+}
+
+
+function templateLightboxNav(id) {         
+ return `
+  <ul>
+  <li onclick="closeLightbox()"><img src="./img/icons/x.png"></li>
+  <li><img src="${checkIsliked(id)}" onclick="switchIsliked('${id}')"></li>
+  <li><img src="${checkIscaught(id)}" onclick="switchIsCaught('${id}')"></li>
+  </ul>`
 }
 
 
