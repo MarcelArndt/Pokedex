@@ -1,16 +1,27 @@
-let currentPokeCounter = 1;
-let currentposition = 0;
+let pullcounter = 0;
+let rendercounter = 0;
 let loadedPokeArray = [];
-let iscaught =  []; // nur die reinen id's
-let isliked =  []; // nur die reinen id's
+let iscaught =  []; // nur ids
+let isliked =  []; // nur ids
 let content = "";
+let MyDataMode = [false, false];
 
 
-
-function init(){
+async function init(){
+    loadMyData();
+    initScrollbar();
     content = document.getElementById("content");
     resetContent();
-    pullRotation(25);
+    renderLegendenCounter();
+    startRendering(151);
+}
+
+
+function oncheckscroll(){
+    /*maxScrollHight = document.body.scrollHeight - document.body.clientHeight - 100;
+    if(window.scrollY > maxScrollHight){
+        continueRendering(4);
+    }*/
 }
 
 
@@ -18,50 +29,146 @@ function resetContent(){
     content.innerHTML = "";
 }
 
-async function toTitleName(){
-    let name = await loadedPokeArray[currentposition]["name"];
-    let titledName = name[0].toUpperCase() + name.slice(1);
-    loadedPokeArray[currentposition]["name"] = titledName;
-}
 
 
-async function pullPokemons(numberOfSteps){
-    for (let i=0; i <= numberOfSteps; i++){
-    let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${currentPokeCounter}`);
-    currentPokemon = await response.json();
-    currentPokeCounter++;
-    loadedPokeArray.push(currentPokemon);
+
+
+async function intSearchBar(){
+    input = document.getElementById("pokeSearch").value;
+    input =  input.toLowerCase();
+    if (input.length > 2){
+    toSearch(input);
     }
-    await renderPokemonCard(numberOfSteps);
-
 }
 
 
-async function buildNumber(){
-    let newId = loadedPokeArray[currentposition]["id"];
+function toSearch(keyword){
+    MyDataMode = [false, false]
+    resetContent();
+    for (let i=0; i < loadedPokeArray.length; i++){  
+        let name = loadedPokeArray[i]["name"].toLowerCase()
+    if (name.includes(keyword) || loadedPokeArray[i]["typeSummary"][0].includes(keyword)){
+            renderPokemonCard(i)
+        }
+    }
+}
+
+
+async function checkPullCounter(){
+    if(pullcounter < 1024){
+        return false
+    }else{
+        console.log("Dataset loading is complet.")
+        return true
+    }
+}
+
+
+async function pullPokemons(pullamount){
+    for (let i=1; i < pullamount; i++){
+    let isAllData = await checkPullCounter();
+    if(!isAllData){
+        pullcounter++;
+        let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pullcounter}`);
+        let currentPokemon = await response.json();
+        loadedPokeArray.push(currentPokemon);
+        await additionInfos(pullcounter -1);
+        }   
+    }
+}
+
+
+async function additionInfos(id){
+    let data = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${Number(id) +1}/`);
+    data =  await data.json();
+    await getGermanName(id, data)
+    await buildNumber(id)
+    await buildColorTheme(id);
+    await getHight(id);
+    await getWeight(id)
+    await buildTypes(id);
+    await getSkills(id);
+    await getSpecies(id, data);
+}
+
+
+async function getSpecies(id, data){
+    console.log(data);
+    let value = data["genera"][4]["genus"];
+    let newobject = {"species": value}
+    Object.assign(loadedPokeArray[id], newobject)
+}
+
+
+async function getHight(id){
+    let value = loadedPokeArray[id]["height"];
+    let newValue = `Bis zu ${value*10} cm od. ${Math.round(value*3.973)} inch groß.`;
+    loadedPokeArray[id]["height"] = newValue;
+}
+
+
+async function getWeight(id){
+    let value = loadedPokeArray[id]["weight"];
+    let newValue = `Bis zu ${value/10} Kg od. ${Math.round(value/4.536)} Pfund schwer.`;
+    loadedPokeArray[id]["weight"] = newValue;
+}
+
+
+async function getSkills(id){
+    let skillSum = "";
+    for (let i=0; i < loadedPokeArray[id]["abilities"].length; i++){
+        let word = toTitleWord(loadedPokeArray[id]["abilities"][i]["ability"]["name"]);
+        skillSum += word + "," +" ";
+    }
+    skillSum = skillSum.slice(0, -2)
+    let newObject = {"ListOfAbility": skillSum};
+    Object.assign(loadedPokeArray[id], newObject);
+}
+
+
+async function getGermanName(id, data){
+    let name = await data["names"][5]["name"];
+    loadedPokeArray[id]["name"] = name;
+}
+
+
+async function buildNumber(id){
+    let newId = await loadedPokeArray[id]["id"];
     let stringNumber = newId.toString();
     for(i=0; stringNumber.length < 3; i++){
     stringNumber = "0" + stringNumber;
     }
-    loadedPokeArray[currentposition]["id"] = stringNumber;
+    let numberobject = {"visualnumber": stringNumber};
+    Object.assign(loadedPokeArray[id], numberobject)
 }
 
 
-async function buildColorTheme(){
-    let getPokemonType = await loadedPokeArray[currentposition]["types"][0]["type"]["name"]
+async function buildColorTheme(id){
+    let getPokemonType = await loadedPokeArray[id]["types"][0]["type"]["name"]
     let color = catchColorTemplate(getPokemonType)
-    newObject = {"colorTheme": color};
-    Object.assign(loadedPokeArray[currentposition], newObject)
+    let newObject = {"colorTheme": color};
+    Object.assign(loadedPokeArray[id], newObject)
 }
 
 
-async function buildTypes(){
-    type = ``
-    for (let i=0; i < loadedPokeArray[currentposition]["types"].length; i++){
-        type += `<li>${loadedPokeArray[currentposition]["types"][i]["type"]["name"]}</li>`;
+async function buildTypes(id){
+    let typesum = [];
+    let type = ``;
+    for (let i=0; i < loadedPokeArray[id]["types"].length; i++){
+        let word = toTitleWord(loadedPokeArray[id]["types"][i]["type"]["name"]);
+        type += `<li>${word}</li>`;
+        typesum.push(loadedPokeArray[id]["types"][i]["type"]["name"]);
     }
-    newObject = {"typeHTML": type};
-    Object.assign(loadedPokeArray[currentposition], newObject)
+    let newObject = {"typeHTML": type, "typeSummary": [typesum]};
+    Object.assign(loadedPokeArray[id], newObject);
+}
+
+function toTitleWord(string){
+    let firstLetter = string[0];
+    firstLetter = firstLetter.toUpperCase();
+    string = string.substr(1).toLowerCase();
+    let newString = firstLetter + string;
+    return newString
 }
 
 
@@ -102,6 +209,11 @@ async function switchIsliked(id){
         isliked.splice(myIndex, 1);
     }
     refreshPokemonCard(id);
+    renderLegendenCounter();
+    saveMyData();
+    if(MyDataMode[0]){
+        renderMyDataPokemon(MyDataMode[1])
+    }
 }
 
 
@@ -115,20 +227,57 @@ async function switchIsCaught(id){
         iscaught.splice(myIndex, 1);
     }
     refreshPokemonCard(id);
+    renderLegendenCounter();
+    saveMyData();
+    if(MyDataMode[0]){
+        renderMyDataPokemon(MyDataMode[1])
+    }
 }
 
 
-async function renderPokemonCard(numberOfSteps){
-    for (let i=1; i <= numberOfSteps; i++){
-        await buildNumber();
-        await buildTypes();
-        await buildColorTheme();
-        await toTitleName();
-        let imageForFav =  checkIsliked(currentposition);
-        let imageForCatch =  checkIscaught(currentposition);
-        content.innerHTML += templatePokeCard(currentposition, imageForFav, imageForCatch);
-        currentposition++;
+async function renderPokemonCard(id){
+    let imageForFav =  checkIsliked(id);
+    let imageForCatch =  checkIscaught(id);
+    content.innerHTML += templatePokeCard(id, imageForFav, imageForCatch);
+}
+
+
+async function startRendering(number){
+    await pullPokemons(number+1);
+    for(let i=0; i< number; i++){ 
+        rendercounter++;
+        renderPokemonCard(i);
     }
+}
+
+
+async function continueRendering(number){
+    await pullPokemons(10);
+    console.log(loadedPokeArray);
+    renderPokemonCard(rendercounter);
+    }
+
+
+async function renderMyDataPokemon(pokeArray){
+    toRenderArray =  iscaught;
+    if (pokeArray){
+        toRenderArray = isliked;
+    }
+    resetContent();
+    for(let i=0; i < await toRenderArray.length; i++){
+        renderPokemonCard(toRenderArray[i]);
+    }
+    MyDataMode = [true, pokeArray];
+}
+
+
+function renderLegendenCounter(){
+    let numberFav = isliked.length;
+    let numbercatch = iscaught.length;
+    let favContent = document.getElementById("fav_number");
+    let catchContent = document.getElementById("caught_number");
+    favContent.innerHTML = numberFav;
+    catchContent.innerHTML = numbercatch;
 }
 
 
@@ -145,57 +294,19 @@ async function refreshPokemonCard(id){
 }
 
 
-async function pullRotation(number){
-    for (let i = 1; i <= number;i++){
-       await pullPokemons(1);
-    }
+function saveMyData(){
+    let mydataPackage = [isliked,iscaught]
+    let stringfyPackage = JSON.stringify(mydataPackage);
+    localStorage.setItem("PokeDexSaveData_Marcel", stringfyPackage)
 }
 
 
-function setupcloseanimation(){
-    let lightbox = document.getElementById("lightbox");
-    lightbox.classList.remove("animation_fadein");
-    lightbox.classList.add("animation_fadeout");
-
-}
-
-function toggle_popup(){
-    let blackbox = document.getElementById("blackbox");
-    let header = document.getElementById("navbar");
-    blackbox.classList.toggle("display_none");
-    content.classList.remove("addblur");
-    header.classList.remove("addblur");
-}
-
-
-function resetLightboxContent(){
-    let lightBoxContent = document.getElementById("lightbox_content");
-    lightBoxContent.innerHTML = "";
-}
-
-
-function closeLightbox(){
-    setupcloseanimation();
-    toggle_popup();
-    setTimeout(resetLightboxContent, 250);
-}
-
-
-function openLightbox(id){
-    let lightboxContent = document.getElementById("lightbox_content");
-    let header = document.getElementById("navbar");
-    lightboxContent.innerHTML = "";
-    lightboxContent.innerHTML += templatePokeLightBox(id);
-    content.classList.add("addblur");
-    header.classList.add("addblur");
+function loadMyData(){
+    let getPackage = localStorage.getItem("PokeDexSaveData_Marcel");
+    let encodePackage = JSON.parse(getPackage);
+    isliked = encodePackage[0];
+    iscaught = encodePackage[1];
 }
 
 
 console.log(loadedPokeArray);
-
-
-/* ToDo: Karte erstellen -->
-
-    jmn
-            
-*/

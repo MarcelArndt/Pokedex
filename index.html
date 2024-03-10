@@ -8,175 +8,100 @@
   <link type="text/css" rel="stylesheet" href="./style/style.css">
   <link type="text/css" rel="stylesheet" href="./style/scrollbar.css">
   <link rel="icon" href="./img/favicon.ico" type="image/x-icon">
+  <script src="./scripts/lightbox.js"></script>
   <script src="./scripts/template.js"></script>
   <script src="./scripts/script.js"></script>
+  <script src="./scripts/scrollbar.js"></script>
   </head>
-<body onload="init()">
-  <div class="main_wrapper">
+<body onload="init()" onresize="checksize()" onscroll="oncheckscroll()">
+  <div id="main-container" class="main_wrapper">
 
     <div id="lightbox_content">
-
   </div>
+
+ 
 
 
     <header id="navbar" >
       <div class="content_wrapper">
         <div class="headarea">
         <div class="logo"><img src="./img/logo.png"></div>
-        <div class="legende">
-          <div class="icon"><img src="./img/icons/star-fill.png"></div><div>3 Favoriten</div>
-          <div class="icon"><img src="./img/icons/pokeball_filled.png"></div><div>5 gefangene Pokemon</div>
-        </div>
-        <div class="seachbar"><div class="icon"><img src="./img/icons/search.png"></div><input id="pokeSearch" placeholder="Search for Name or Type"></div>
+        <div class="seachbar"><div class="icon"><img src="./img/icons/search.png"></div><input id="pokeSearch" oninput="intSearchBar()" placeholder="Search for Name or Type"></div>
         <img class="background" src="./img/pokeball_small_card.png">
       </div>
       </div>
     </header>
 
+
+    <section id="banner">
+      <div class="content_wrapper">
+        <div class="banner_boarder">
+          <img src="./img/banner/banner.png">
+        </div>
+      </div>
+    </section>
+
+
+
+    <section class="scrollmenu_mainwrapper">
+      <hr>
+      <div class="scrollmenu_wrapper">
+        <div class="scrollmenu_padding">
+        <nav class="scrollmenu">
+          <div onclick="moveLeft()" class="left_arrow_scrollmenu"><img id="button_left" class="minus_opacity" src="./img/icons/chevron-left.png"></div>
+          <div class="content_scrollmenu">
+            <ul id="scrollcontainer">
+              <li class="grey" onclick="renderMyDataPokemon(true)"><div class="flexbutton">All</div></li>
+              <li class="yellow" onclick="renderMyDataPokemon(true)"><div class="flexbutton"><img src="./img/icons/star-fill.png">Favoriten</div></li>
+              <li class="red" onclick="renderMyDataPokemon(false)"><div class="flexbutton"><img src="./img/icons/pokeball_filled.png">Gefangene</div></li>
+              <li class="grey" onclick="toSearch('normal')">Normal</li>
+              <li class="red" onclick="toSearch('fire')">Fire</li>
+              <li class="blue" onclick="toSearch('water')">Water</li>
+              <li class="yellow" onclick="toSearch('electric')">Electric</li>
+              <li class="green" onclick="toSearch('grass')">Grass</li>
+              <li class="cyan" onclick="toSearch('ice')">Ice</li>
+              <li class="orange" onclick="toSearch('fighting')">Fighting</li>
+              <li class="purble" onclick="toSearch('poison')">Poison</li>
+              <li class="brown" onclick="toSearch('ground')">Ground</li>
+              <li class="cyan" onclick="toSearch('flying')">Flying</li>
+              <li class="pink" onclick="toSearch('psychic')">Psychic</li>
+              <li class="green" onclick="toSearch('bug')">Bug</li>
+              <li class="brown" onclick="toSearch('rock')">Rock</li>
+              <li class="purble" onclick="toSearch('ghost')">Ghost</li>
+              <li class="drake" onclick="toSearch('dragon')">Dragon</li>
+              <li class="dark" onclick="toSearch('dark')">Dark</li>
+              <li class="grey" onclick="toSearch('steel')">Steel</li>
+              <li class="pink" onclick="toSearch('fairy')">Fairy</li>
+            </ul>
+          </div>
+          <div onclick="moveRight()" class="right_arrow_scrollmenu"><img id="button_right" src="./img/icons/chevron-right.png"></div>
+        </nav>
+        <div class="frow">
+          <div onclick="moveLeft()" class="left_arrow_scrollmenu display_reverse scroll_mobil"><img id="button_left_mobil" class="minus_opacity" src="./img/icons/chevron-left.png"></div>
+          <div onclick="moveRight()" class="right_arrow_scrollmenu display_reverse scroll_mobil"><img id="button_right_mobil" src="./img/icons/chevron-right.png"></div>
+        </div>  
+        </div>
+      </div> 
+      <hr>
+    </section>
+
+  <section>
+    <div class="content_wrapper">
+      <div class="legende">
+        <div class="whiteSpace"><div class="icon"><img src="./img/icons/star-fill.png"></div><div><span id="fav_number">0</span> Favoriten</div></div>
+        <div class="whiteSpace"><div class="icon"><img src="./img/icons/pokeball_filled.png"></div><div><span id="caught_number">0</span> Gefangene Pokemon</div></div>
+      </div>
+    </div>
+  </section>
+
+
     <section class="fgrow">
       <div class="content_wrapper">
         <div id="content">     
         
-        <section class="pokemonCard red" id="470">
-          <div class="pokemonCardMenu">
-            <div class="menu_icon"><img src="./img/icons/menu.png"></div>
-            <ul>
-              <li class="fav"><img src="./img/icons/star-fill.png"></li>
-              <li class="team"><img src="./img/icons/pokeball.png"></li>
-            </ul>
-          </div>
-          <img src="./img/pokeball_small_card.png">
-            <div class="pokemonCardId">#470</div>
-            <div class="pokemonCardName">Folipurba</div>
-            <div class="pokemonCardType"><ul id="470_type"><li>Feuer</li><li>Drache</li></ul></div>
-            <div class="card_image"><img src="./img/dummy/470.png"></div>
-        </section>
-
-        <section class="pokemonCard green" id="470">
-          <div class="pokemonCardMenu">
-            <div class="menu_icon"><img src="./img/icons/menu.png"></div>
-            <ul>
-              <li class="fav"><img src="./img/icons/star-fill.png"></li>
-              <li class="team"><img src="./img/icons/pokeball.png"></li>
-            </ul>
-          </div>
-          <img src="./img/pokeball_small_card.png">
-            <div class="pokemonCardId">#470</div>
-            <div class="pokemonCardName">Folipurba</div>
-            <div class="pokemonCardType"><ul id="470_type"><li>Grass</li><li>Normal</li></ul></div>
-            <div class="card_image"><img src="./img/dummy/470.png"></div>
-        </section>
-
-        <section class="pokemonCard blue" id="470">
-          <div class="pokemonCardMenu">
-            <div class="menu_icon"><img src="./img/icons/menu.png"></div>
-            <ul>
-              <li class="fav"><img src="./img/icons/star-fill.png"></li>
-              <li class="team"><img src="./img/icons/pokeball.png"></li>
-            </ul>
-          </div>
-          <img src="./img/pokeball_small_card.png">
-            <div class="pokemonCardId">#470</div>
-            <div class="pokemonCardName">Folipurba</div>
-            <div class="pokemonCardType"><ul id="470_type"><li>Flying</li><li>Drake</li></ul></div>
-            <div class="card_image"><img src="./img/dummy/470.png"></div>
-        </section>
-
-        <section class="pokemonCard purble" id="470">
-          <div class="pokemonCardMenu">
-            <div class="menu_icon"><img src="./img/icons/menu.png"></div>
-            <ul>
-              <li class="fav"><img src="./img/icons/star-fill.png"></li>
-              <li class="team"><img src="./img/icons/pokeball.png"></li>
-            </ul>
-          </div>
-          <img src="./img/pokeball_small_card.png">
-            <div class="pokemonCardId">#470</div>
-            <div class="pokemonCardName">Folipurba</div>
-            <div class="pokemonCardType"><ul id="470_type"><li>Grass</li><li>Normal</li></ul></div>
-            <div class="card_image"><img src="./img/dummy/470.png"></div>
-        </section>
-
-        <section class="pokemonCard pink" id="470">
-          <div class="pokemonCardMenu">
-            <div class="menu_icon"><img src="./img/icons/menu.png"></div>
-            <ul>
-              <li class="fav"><img src="./img/icons/star-fill.png"></li>
-              <li class="team"><img src="./img/icons/pokeball.png"></li>
-            </ul>
-          </div>
-          <img src="./img/pokeball_small_card.png">
-            <div class="pokemonCardId">#470</div>
-            <div class="pokemonCardName">Folipurba</div>
-            <div class="pokemonCardType"><ul id="470_type"><li>Grass</li><li>Normal</li></ul></div>
-            <div class="card_image"><img src="./img/dummy/470.png"></div>
-        </section>
-
-        <section class="pokemonCard yellow" id="470">
-          <div class="pokemonCardMenu">
-            <div class="menu_icon"><img src="./img/icons/menu.png"></div>
-            <ul>
-              <li class="fav"><img src="./img/icons/star-fill.png"></li>
-              <li class="team"><img src="./img/icons/pokeball.png"></li>
-            </ul>
-          </div>
-          <img src="./img/pokeball_small_card.png">
-            <div class="pokemonCardId">#470</div>
-            <div class="pokemonCardName">Folipurba</div>
-            <div class="pokemonCardType"><ul id="470_type"><li>Electro</li><li>Pycho</li></ul></div>
-            <div class="card_image"><img src="./img/dummy/470.png"></div>
-        </section>
-
-        <section class="pokemonCard grey" id="470">
-          <div class="pokemonCardMenu">
-            <div class="menu_icon"><img src="./img/icons/menu.png"></div>
-            <ul>
-              <li class="fav"><img src="./img/icons/star-fill.png"></li>
-              <li class="team"><img src="./img/icons/pokeball.png"></li>
-            </ul>
-          </div>
-          <img src="./img/pokeball_small_card.png">
-            <div class="pokemonCardId">#470</div>
-            <div class="pokemonCardName">Folipurba</div>
-            <div class="pokemonCardType"><ul id="470_type"><li>Grass</li><li>Normal</li></ul></div>
-            <div class="card_image"><img src="./img/dummy/470.png"></div>
-        </section>
-
-        
-        <section class="pokemonCard brown" id="470">
-          <div class="pokemonCardMenu">
-            <div class="menu_icon"><img src="./img/icons/menu.png"></div>
-            <ul>
-              <li class="fav"><img src="./img/icons/star-fill.png"></li>
-              <li class="team"><img src="./img/icons/pokeball.png"></li>
-            </ul>
-          </div>
-          <img src="./img/pokeball_small_card.png">
-            <div class="pokemonCardId">#470</div>
-            <div class="pokemonCardName">Folipurba</div>
-            <div class="pokemonCardType"><ul id="470_type"><li>Grass</li><li>Normal</li></ul></div>
-            <div class="card_image"><img src="./img/dummy/470.png"></div>
-        </section>
-
-        <section class="pokemonCard cyan" id="470">
-          <div class="pokemonCardMenu">
-            <div class="menu_icon"><img src="./img/icons/menu.png"></div>
-            <ul>
-              <li class="fav"><img src="./img/icons/star-fill.png"></li>
-              <li class="team"><img src="./img/icons/pokeball.png"></li>
-            </ul>
-          </div>
-          <img src="./img/pokeball_small_card.png">
-            <div class="pokemonCardId">#470</div>
-            <div class="pokemonCardName">Folipurba</div>
-            <div class="pokemonCardType"><ul id="470_type"><li>Grass</li><li>Normal</li></ul></div>
-            <div class="card_image"><img src="./img/dummy/470.png"></div>
-        </section>
-
       </div>
     </section>
     
-
   </div>
 </body>
 </html>

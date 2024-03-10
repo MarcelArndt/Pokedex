@@ -93,7 +93,17 @@ p{
 header{
   position: fixed;
   width: 100%;
-  z-index: 55;
+  z-index: 50;
+}
+
+hr{
+  margin: 24px 0px;
+  margin-right: auto;
+  margin-left: auto;
+  width: 75%;
+  height: 1px;
+  background: linear-gradient(270deg, rgba(138,175,208,0) 0%, rgba(138,175,208,1) 20%, rgba(138,175,208,1) 81%, rgba(138,175,208,0) 100%);
+  border: none;
 }
 
 .main_wrapper{
@@ -140,14 +150,18 @@ header{
 
 #pokeSearch{
   z-index: 57;
-  color: #c8c8c8;
+  color: rgb(135,135,170);
   height: 40px;
   width: 275px;
   font-size: 18px;
   padding-left: 12px;
   border-radius: 12px;
-  border: 2px solid #c8c8c8;
+  border: 2px solid rgb(175,175,175);
   position: relative;
+}
+
+#pokeSearch::placeholder{
+  opacity: 0.25;
 }
 
 #pokeSearch:focus{
@@ -180,8 +194,11 @@ header{
 }
 
 .legende{
+  font-weight: 600;
+  z-index: 0;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .fgrow{
@@ -191,7 +208,7 @@ header{
 
 #content{
   width: 95%;
-  margin: 92px 0px;
+  margin: 72px 0px;
   margin-left: auto;
   margin-right: auto;
   justify-content: center;
@@ -343,6 +360,26 @@ header{
   transform: scale(1.15);
 }
 
+.sound{
+  position: absolute;
+  right: 122px;
+  bottom: -20px;
+  height: 26px;
+  width: 26px;
+}
+
+.sound img:hover{
+  cursor: pointer;
+  transform: scale(1.15);
+}
+
+.sound img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+ }
+
 .fav{
   position: absolute;
   right: 72px;
@@ -439,6 +476,8 @@ header{
   background-color: rgba(20, 20, 35, 0.9);
 }
 
+
+
 .popup_lightbox{
   z-index: 60;
   position: fixed;
@@ -459,9 +498,11 @@ header{
 .bufferbox{
   position: relative;
   margin-top: -35px;
-  width: 100%;
+  margin-left: 50px;
+  margin-right: 50px;
+  width: 90vw;
   max-width: var(--lightbox_width);
-  height: 180px;
+  height: 50px;
   background-color: white;
   border-radius: 35px 35px 0 0;
 }
@@ -476,7 +517,6 @@ header{
 
 .lightbox_image{
   position: absolute;
-  bottom: 25px;
   left: 0px;
   right: 0px;
 }
@@ -485,7 +525,7 @@ header{
   user-select: none;
   z-index: 66;
   position: absolute;
-  bottom:85px;
+  bottom:-25px;
   left: 0px;
   right: 0px;
   margin-left: auto;
@@ -493,34 +533,22 @@ header{
   width: 275px;
 }
 
-.shadow{
-  user-select: none;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-left: auto;
-  margin-right: auto;
-}
 
-.shadow{
-  user-select: none;
-  opacity: 0.5;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.mainarea{
+.mainarea{  
+  margin-left: 50px;
+  margin-right: 50px;
   position: relative;
   border-radius: 0 0 35px 35px;
-  width: 100%;
+  width: 90vw;
   max-width: var(--lightbox_width);
-  height: 250px;
+  height: 425px;
   background-color: rgb(255, 255, 255);
   overflow: hidden;
 }
+
 .boxhead{
   position: relative;
-  width: 100%;
+  width: 90vw;
   max-width: var(--lightbox_width);
   height: 400px;
   background-color: white;
@@ -641,6 +669,121 @@ header{
   filter: blur(6px);
   transition: filter 250ms ease-in-out;
 }
+
+#banner .content_wrapper{
+  max-width: 50%;
+}
+
+#banner{
+  margin-top: 170px;
+  margin-bottom: 94px;
+}
+
+.banner_boarder{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.banner_boarder img{
+  min-width: 320px;
+  max-width: 1024px;
+  border-radius: 20px;
+  border: 10px solid white;
+  outline: 6px solid #8aafd0;
+  width: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+
+.typeMenu ul{
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+
+.flexbutton{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.flexbutton img{
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  margin-right: 16px;
+  filter: saturate(0%) brightness(400%);
+}
+
+.whiteSpace{
+  user-select: none;
+  margin: 8px;
+  color:rgb(70, 70, 150);
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 32px;
+  border-radius: 12px;
+  border: 3px solid #efefef;
+  border-top: none;
+  filter: drop-shadow(0px 5px 3px rgba(125,125,255,0.35));
+}
+
+.whiteSpace .icon{
+  margin-left: 0px;
+}
+
+
+.lightbox_wrapper{
+  position: relative;
+  background-color: #ffffff;
+  width: 100%;
+  height: 425px;
+  padding: 24px;
+}
+
+.infoBox_wrapper{
+  width: calc(100% - 48px);
+}
+
+.infoBox_wrapper h3{
+  text-align: center;
+  font-weight: 700;
+  font-size: 20px;
+  color: #294760;
+  letter-spacing: 3px;
+  padding-bottom: 0px;
+}
+
+.infoBox_wrapper hr{
+  margin: 10px auto 0px auto;
+}
+
+.infoBox-content{
+  font-size: 18px;
+  margin-top: 24px;
+}
+
+.infoBox-content div{
+  margin-top: 8px;
+}
+
+.infoRow{
+  display: flex;
+  flex-direction: row;
+}
+
+.infoCategory{
+  font-weight: 600;
+  min-width: 125px;
+}
+
 
 
 

@@ -14,7 +14,7 @@ function refreshTemplatePokeCard(id, imageForFav, imageForCatch){
     </ul>
   </div>
   <img src="./img/pokeball_small_card.png">
-    <div class="pokemonCardId">#${loadedPokeArray[id]["id"]}</div>
+    <div class="pokemonCardId">#${loadedPokeArray[id]["visualnumber"]}</div>
     <div class="pokemonCardName">${loadedPokeArray[id]["name"]}</div>
     <div class="pokemonCardType"><ul id="470_type">${loadedPokeArray[id]["typeHTML"]}</ul></div>
     <div class="card_image"><img src="${loadedPokeArray[id]["sprites"]["other"]["official-artwork"]["front_default"]}"></div>
@@ -23,30 +23,53 @@ function refreshTemplatePokeCard(id, imageForFav, imageForCatch){
 
 
 function templatePokeLightBox(id){
-  return `<div id="blackbox">
-  <div id="lightbox" class="animation_fadein popup_lightbox">
-    <div class="content_wrapper">
+  return `
 
-      <div class="boxhead ${loadedPokeArray[id]["colorTheme"]}"> 
-        <nav id="lightboxnav" class="boxheadnav">
-        ` + templateLightboxNav(id) + `  
-        </nav>
-        <div class="boxheadname">${loadedPokeArray[id]["name"]}</div>
-        <div class="boxheadtype"><ul>${loadedPokeArray[id]["typeHTML"]}</ul></div>
-        <div class="boxheadid">#${loadedPokeArray[id]["id"]}</div>
-        <div class="backgoundelement"><img src="./img/pokeball_500px.png"></div>
-      </div>
+    <div id="blackbox">
 
-      <div class="bufferbox">
-        <div class="picturearea">
-          <div class="lightbox_image"><img src="${loadedPokeArray[id]["sprites"]["other"]["official-artwork"]["front_default"]}"><img class="shadow" src="./img/shadow.png"></div>
+      <div id="lightbox" class="animation_fadein popup_lightbox">
+        <div class="content_wrapper">
+
+        <div class="boxhead ${loadedPokeArray[id]["colorTheme"]}"> 
+          <nav id="lightboxnav" class="boxheadnav">
+          ` + templateLightboxNav(id) + `  
+          </nav>
+          <div class="boxheadname">${loadedPokeArray[id]["name"]}</div>
+          <div class="boxheadtype"><ul>${loadedPokeArray[id]["typeHTML"]}</ul></div>
+          <div class="boxheadid">#${loadedPokeArray[id]["visualnumber"]}</div>
+          <div class="backgoundelement"><img src="./img/pokeball_500px.png"></div>
         </div>
-      </div>
 
-      <div class="mainarea"></div>
+        <div class="bufferbox">
+          <div class="picturearea">
+            <div class="lightbox_image"><img src="${loadedPokeArray[id]["sprites"]["other"]["official-artwork"]["front_default"]}"></div>
+          </div>
+        </div>
+
+        <div class="mainarea">
+        <div class="lightbox_wrapper">
+            <div class="infoBox_wrapper">
+
+            <div class="infoBox-1">
+                <h3>Allgemeine Infos</h3>
+               <hr>
+
+               <div class="infoBox-content">
+                <div class="infoRow"><div class="infoCategory">Species: </div><div> ${loadedPokeArray[id]["species"]}</div></div>
+                <div class="infoRow"><div class="infoCategory">Körpergröße: </div><div> ${loadedPokeArray[id]["height"]}</div></div>
+                <div class="infoRow"><div class="infoCategory">Gewicht: </div><div>${loadedPokeArray[id]["weight"]}</div></div>
+                <div class="infoRow"><div class="infoCategory">Fähigkeiten: </div><div>${loadedPokeArray[id]["ListOfAbility"]}</div></div>
+               <div>
+
+             </div>
+
+           </div>
+          </div>
+        </div>
+
+     </div>
     </div>
-  </div>
-</div>`;
+<div>`;
 }
 
 

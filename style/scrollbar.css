@@ -16,3 +16,205 @@
   ::-webkit-scrollbar-track {
     background: #979797; 
   }
+
+
+  .frow{
+    display: flex;
+    flex-grow:1;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+
+  .juflexcenter{
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+  }
+
+  .scrollmenu_mainwrapper{
+    top:0px;
+    background-color: var(--background_color);
+    filter: drop-shadow(0px 3px 3px rgba(0, 0, 0, 0.05));
+    border-bottom: 2px solid var(--light_color);
+    z-index: 10;
+    width: 100%;
+  
+  }
+  
+  .scrollmenu_wrapper{
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1440px;
+    padding: 15px 15px;
+  }
+  
+  .scrollmenu_padding{
+  
+    padding: 3px 25px;
+    padding-right: 30px;
+  }
+  
+  .scrollmenu{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+    }
+  
+  .left_arrow_scrollmenu{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    padding: 10px;
+    user-select: none;
+    cursor: pointer;
+  }
+  
+  .left_arrow_scrollmenu:hover{
+    filter: brightness(85%) contrast(120%);
+  }
+  
+  .left_arrow_scrollmenu img{
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+    object-position: center;
+    white-space: nowrap;
+    padding: 12px;
+    background-color: #efefef;
+    border-radius: 10px;
+  }
+  
+  .right_arrow_scrollmenu{
+    user-select: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    padding: 10px;
+    white-space: nowrap;
+  }
+  
+  .right_arrow_scrollmenu:hover{
+    filter: brightness(85%) contrast(120%);
+  }
+  
+  .right_arrow_scrollmenu img{
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+    object-position: center;
+    padding: 12px;
+    background-color: #efefef;
+    border-radius: 10px;
+  }
+  
+  .content_scrollmenu ul{
+   padding: 0px;
+   margin: 0px;
+   list-style: none;
+   display: flex;
+   flex-direction: row;
+   overflow-x: scroll;
+   scroll-behavior: smooth;
+  }
+  
+  .content_scrollmenu ul::-webkit-scrollbar{
+    display: none;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+   }
+  
+  .content_scrollmenu li{
+    user-select: none;
+    display: inline-block;
+    border-radius: 5px;
+    padding: 10px 25px;
+    text-decoration: none;
+    user-select: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+    white-space: nowrap;
+    margin: 0 12px;
+   }
+  
+   .content_scrollmenu li:hover{
+    cursor: pointer;
+    filter: brightness(85%) contrast(120%);
+   }
+  
+   .content_scrollmenu li:active{
+    filter: brightness(85%) contrast(120%);
+   }
+  
+  
+   .content_scrollmenu{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    overflow: hidden;
+   }
+
+   .display_reverse{
+    display: none;
+  }
+
+  .minus_opacity{
+    opacity: 0.25;
+   }
+
+
+  .scroll_mobil{
+    flex-direction: row;
+    margin: 8px 32px;
+    margin-top: 16px;
+  }
+
+  .content_scrollmenu{
+    border-right: 3px solid #8aafd0;
+    border-left: 3px solid #8aafd0;
+  }
+
+  @media(max-width: 450px){
+
+    .scrollmenu_wrapper{
+      padding: 0px;
+    }
+  
+    .scrollmenu_padding{
+      padding-top: 15px;
+      margin-top: 15px;
+      padding-right: 30px;
+    }
+  
+    .display_reverse{
+      display: flex;
+    }
+  
+    .scroll_mobil{
+      flex-direction: row;
+      margin: 8px 32px;
+      margin-top: 16px;
+    }
+
+    .left_arrow_scrollmenu, .right_arrow_scrollmenu{
+      display: none;
+    }
+    
+    .scroll_mobil{
+      display: flex;
+    }
+
+
+
+  }
