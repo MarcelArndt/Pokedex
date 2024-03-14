@@ -28,9 +28,6 @@ function moveRight(){
 
 }
 
-/* 
-    <body onresize ="checksize()">  ---> löst aus und testet den Scrolballken neu
-*/
 
 function checksize(){
     maxScrollWidth = container.scrollWidth - container.clientWidth -20;

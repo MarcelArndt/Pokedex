@@ -51,7 +51,6 @@
   }
   
   .scrollmenu_padding{
-  
     padding: 3px 25px;
     padding-right: 30px;
   }
@@ -128,6 +127,13 @@
   }
   
   .content_scrollmenu ul::-webkit-scrollbar{
+    display: none;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+   }
+
+
+   .hiddeScrollbar::-webkit-scrollbar{
     display: none;
     -ms-overflow-style: none;
     scrollbar-width: none;
