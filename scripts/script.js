@@ -5,6 +5,7 @@ let content = "";
 let MyDataMode = [false, false];
 let isInSearch = false;
 let alreadyLoading = false;
+let currentIndexHolder = 0;
 
 
 async function init(){
@@ -12,15 +13,11 @@ async function init(){
     initScrollbar();
     content = document.getElementById("content");
     resetContent();
-    renderLegendenCounter();
+    renderLegendCounter();
+    await getPokemonsList()
     await startRenderAll();
-    await continueRenderAll();
 }
 
-
-function resetContent(){
-    content.innerHTML = "";
-}
 
 
 async function intSearchBar(){
@@ -37,11 +34,38 @@ async function toSearch(keyword){
     MyDataMode = [false, false];
     resetContent();
     for (let i=0; i < loadedPokeArray.length; i++){
-        let name = loadedPokeArray[i]["name"].toLowerCase();
-    if (name.includes(keyword) || loadedPokeArray[i]["typeSummary"][0].includes(keyword)){
-        await renderPokemonCard(i);
-        }
+        let name = await loadedPokeArray[i]["name"].toLowerCase();
+        let germanName = await ifGermanNameReady(i)
+        let types = await ifTypeReady(i)
+    if(types && germanName){
+        if (germanName.includes(keyword) || types.includes(keyword)){
+            await initRenderCard(i, 0);
+            }
+    }else{
+        if (name.includes(keyword)){
+            await initRenderCard(i, 0);
+            }
     }
+    }
+}
+
+
+async function ifTypeReady(index) {
+    try{
+    let types = "";
+    if (await loadedPokeArray[index]["typeSummary"][0]){
+        types = await loadedPokeArray[index]["typeSummary"][0];
+        }
+        return types;}catch{};
+}
+
+
+async function ifGermanNameReady(index) {
+    let germanName = "";
+    if (await loadedPokeArray[index]["germanName"]){
+        germanName = await loadedPokeArray[index]["germanName"].toLowerCase();
+        }
+        return germanName;
 }
 
 
@@ -52,8 +76,13 @@ function ignorclick(event){
 
 function checkIsliked(id){
     id = Number(id);
-    let checkedisliked = isliked.includes(id);
+    let checkedisliked = false;
     let imageLink = "./img/icons/star.png"
+    for (let i = 0; i < isliked.length;i++){
+        if (id === isliked[i]){
+            checkedisliked  = true;
+        }
+    }
     if (checkedisliked){
         imageLink = "./img/icons/star-fill.png"
     }
@@ -82,7 +111,7 @@ async function switchIsliked(id){
         isliked.splice(myIndex, 1);
     }
     await refreshPokemonCard(id);
-    renderLegendenCounter();
+    renderLegendCounter();
     saveMyData();
     if(MyDataMode[0]){
         renderMyDataPokemon(MyDataMode[1])
@@ -100,7 +129,7 @@ async function switchIsCaught(id){
         iscaught.splice(myIndex, 1);
     }
     await refreshPokemonCard(id);
-    renderLegendenCounter();
+    renderLegendCounter();
     saveMyData();
     if(MyDataMode[0]){
         renderMyDataPokemon(MyDataMode[1])
@@ -108,7 +137,7 @@ async function switchIsCaught(id){
 }
 
 
-function renderLegendenCounter(){
+function renderLegendCounter(){
     let numberFav = isliked.length;
     let numbercatch = iscaught.length;
     let favContent = document.getElementById("fav_number");
@@ -153,8 +182,9 @@ function loadMyData(){
 
 async function playAudio(id){
     audioSrc = document.getElementById("audioData");
-    audioSrc.src = await loadedPokeArray[id]["cries"]["latest"];
+    audioSrc.src = await loadedPokeArray[id]["audio"];
     audiBlock = document.getElementById("audioBlock");
     audiBlock.load();
     audiBlock.play();
 }
+

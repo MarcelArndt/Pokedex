@@ -551,6 +551,7 @@ hr{
 
 
 .mainarea{  
+  margin-bottom: 20px;
   margin-left: 50px;
   margin-right: 50px;
   position: relative;
@@ -563,6 +564,7 @@ hr{
 }
 
 .boxhead{
+  margin-top: 20px;
   position: relative;
   width: 90vw;
   max-width: var(--lightbox_width);
@@ -719,12 +721,10 @@ hr{
 }
 
 .banner_boarder img{
-  min-width: 320px;
-  max-width: 1024px;
   border-radius: 20px;
   border: 10px solid white;
   outline: 6px solid #8aafd0;
-  width: 100%;
+  width: 1024px;
   object-fit: contain;
   object-position: center;
 }
@@ -913,6 +913,8 @@ hr{
     opacity: 1;
   }
 }
+
+
 @keyframes scale-in-center {
   0% {
     -webkit-transform: scale(0);
@@ -937,6 +939,8 @@ hr{
             transform: scale(0.1);
   }
 }
+
+
 @keyframes scale-down-center {
   0% {
     -webkit-transform: scale(1);
@@ -945,5 +949,90 @@ hr{
   100% {
     -webkit-transform: scale(0.1);
             transform: scale(0.1);
+  }
+}
+
+ @media(max-width: 1125px){
+  .banner_boarder img{
+    width: 100%;
+  }
+
+  #banner .content_wrapper{
+    max-width: 90%;
+  }
+  }
+
+
+@media(max-width: 570px){
+  .headarea{
+    height: 150px;
+    flex-direction: column;
+  }
+  .background{
+    top: auto;
+    bottom: 0px;
+  }
+
+  .logo{
+    margin-top: 12px;
+    z-index: 99;
+  }
+
+  #pokeSearch{
+    width: 60vw;
+  }
+
+  .seachbar .icon{
+    margin-left: 0px;
+    padding-left: 0px;
+  }
+
+  #banner{
+    margin-top: 248px;
+  }
+
+  #banner .content_wrapper{
+    max-width: 90%;
+  }
+
+  #banner img{
+    height:46vw;
+    object-fit: cover;
+    object-position: left;
+  }
+
+  .whiteSpace{
+    text-align: center;
+    flex-direction: column;
+  }
+
+  .whiteSpace .icon{
+    margin: 8px 0px;
+
+  }
+}
+
+@media(max-width: 400px){
+
+
+  #banner{
+    margin: 0px;
+    margin-top: 150px;
+  }
+  
+
+  #banner img{
+    display: none;
+  }
+
+  .whiteSpace{
+  padding: 8px 16px
+  }
+
+}
+
+@media(max-height: 825px){
+  .lightbox_image img{
+    width: 24vh;
   }
 }

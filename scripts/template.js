@@ -15,15 +15,15 @@ async function refreshTemplatePokeCard(id, imageForFav, imageForCatch){
     </ul>
   </div>
   <img src="./img/pokeball_small_card.png">
-    <div class="pokemonCardId">#${await loadedPokeArray[id]["visualnumber"]}</div>
-    <div class="pokemonCardName">${await loadedPokeArray[id]["name"]}</div>
+    <div class="pokemonCardId">#${await loadedPokeArray[id]["visualNumber"]}</div>
+    <div class="pokemonCardName">${await loadedPokeArray[id]["germanName"]}</div>
     <div class="pokemonCardType"><ul id="470_type">${await loadedPokeArray[id]["typeHTML"]}</ul></div>
-    <div class="card_image"><img src="${await loadedPokeArray[id]["sprites"]["other"]["official-artwork"]["front_default"]}"></div>
+    <div class="card_image"><img src="${await loadedPokeArray[id]["picture"]}"></div>
   </div>`;
 }
 
 
- function templatePokeLightBox(id){
+function templatePokeLightBox(id){
   return `
 
     <div onclick="closeLightbox()" id="blackbox">
@@ -35,15 +35,15 @@ async function refreshTemplatePokeCard(id, imageForFav, imageForCatch){
           <nav id="lightboxnav" class="boxheadnav">
           ` + templateLightboxNav(id) + `  
           </nav>
-          <div class="boxheadname">${loadedPokeArray[id]["name"]}</div>
+          <div class="boxheadname">${loadedPokeArray[id]["germanName"]}</div>
           <div class="boxheadtype"><ul>${loadedPokeArray[id]["typeHTML"]}</ul></div>
-          <div class="boxheadid">#${loadedPokeArray[id]["visualnumber"]}</div>
+          <div class="boxheadid">#${loadedPokeArray[id]["visualNumber"]}</div>
           <div class="backgoundelement"><img src="./img/pokeball_500px.png"></div>
         </div>
 
         <div onclick="ignorclick(event)" class="bufferbox">
           <div class="picturearea">
-            <div class="lightbox_image"><img src="${loadedPokeArray[id]["sprites"]["other"]["official-artwork"]["front_default"]}"></div>
+            <div class="lightbox_image"><img src="${loadedPokeArray[id]["picture"]}"></div>
           </div>
         </div>
 
