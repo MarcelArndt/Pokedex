@@ -9,15 +9,15 @@ let currentIndexHolder = 0;
 
 
 async function init(){
+    imageSlider();
     loadMyData();
     initScrollbar();
     content = document.getElementById("content");
     resetContent();
     renderLegendCounter();
-    await getPokemonsList()
+    await getPokemonsList();
     await startRenderAll();
 }
-
 
 
 async function intSearchBar(){
@@ -137,29 +137,6 @@ async function switchIsCaught(id){
 }
 
 
-function renderLegendCounter(){
-    let numberFav = isliked.length;
-    let numbercatch = iscaught.length;
-    let favContent = document.getElementById("fav_number");
-    let catchContent = document.getElementById("caught_number");
-    favContent.innerHTML = numberFav;
-    catchContent.innerHTML = numbercatch;
-}
-
-
-async function refreshPokemonCard(id){
-    let elemenet = document.getElementById(`${id}`);
-    elemenet.innerHTML = "";
-    let imageForFav = checkIsliked(id);
-    let imageForCatch =  checkIscaught(id);
-    elemenet.innerHTML += await refreshTemplatePokeCard(id, imageForFav, imageForCatch);
-    try{
-        let lightBoxNav = document.getElementById("lightboxnav");
-        lightBoxNav.innerHTML = templateLightboxNav(id);
-    }catch{}
-}
-
-
 function saveMyData(){
     let mydataPackage = [isliked,iscaught]
     let stringfyPackage = JSON.stringify(mydataPackage);
@@ -187,4 +164,3 @@ async function playAudio(id){
     audiBlock.load();
     audiBlock.play();
 }
-

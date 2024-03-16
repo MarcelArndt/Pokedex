@@ -41,15 +41,54 @@ async function renderMyDataPokemon(pokeArray){
 
 
 async function oncheckscroll(){
+    let goOn = false;
     if(!isInSearch && !alreadyLoading){
-    maxScrollHight = document.body.scrollHeight - document.body.clientHeight -75;
-    if(window.scrollY > maxScrollHight){
-        alreadyLoading = true
-        await initRenderCard(currentIndexHolder, 4);
-        currentIndexHolder = currentIndexHolder +5;
-        alreadyLoading = false
-    }
+        if(checkMaxScrollHight()){
+            goOn = true
+            }
+        while(goOn){
+        if(checkMaxScrollHight()){
+            goOn = true
+            alreadyLoading = true
+            await initRenderCard(currentIndexHolder, 4);
+            currentIndexHolder = currentIndexHolder +5;
+            alreadyLoading = false
+            }else{
+                goOn = false
+            }
+        }
     }
 }
 
+function checkMaxScrollHight(){
+    isMaxHight = false;
+    maxScrollHight = document.body.scrollHeight - document.body.clientHeight -75;
+    if(window.scrollY > maxScrollHight){
+        isMaxHight = true
+    }
+    return isMaxHight
+}
+
+
+function renderLegendCounter(){
+    let numberFav = isliked.length;
+    let numbercatch = iscaught.length;
+    let favContent = document.getElementById("fav_number");
+    let catchContent = document.getElementById("caught_number");
+    favContent.innerHTML = numberFav;
+    catchContent.innerHTML = numbercatch;
+}
+
+
+async function refreshPokemonCard(id){
+    let elemenet = document.getElementById(`${id}`);
+    elemenet.innerHTML = "";
+    let imageForFav = checkIsliked(id);
+    let imageForCatch =  checkIscaught(id);
+    elemenet.innerHTML += await refreshTemplatePokeCard(id, imageForFav, imageForCatch);
+    try{
+        let lightBoxNav = document.getElementById("lightboxnav");
+        lightBoxNav.innerHTML = templateLightboxNav(id);
+    }catch{}
+}
     

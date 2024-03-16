@@ -279,10 +279,10 @@ hr{
 .card_image{
   user-select: none;
   position: absolute;
-  bottom: 0px;
   right: 0px;
   height: 150px;
   width: 150px;
+  transform: translateY(65px);
 }
 
 .card_image img {
@@ -325,11 +325,11 @@ hr{
   cursor: default;
   display: flex;
   width: 100%;
-  z-index: 5;
+  position: absolute;
+  z-index: 10;
   background-color: white;
   min-height: 60px;
-  position: absolute;
-  bottom: -25px;
+  transform: translate(0px,176px);
   left: 0px;
   border-radius: 12px 12px 12px 12px;
   filter: drop-shadow(0px -3px 2px rgba(0,0,255,0.05));
@@ -338,24 +338,26 @@ hr{
 .pokemonCardMenu ul{
   list-style: none;
   display: flex;
+  align-items: flex-start;
 }
 
 .team{
   position: absolute;
   right: 24px;
-  bottom: -20px;
+  bottom: 15px;
   height: 26px;
   width: 26px;
 }
 
 .team img{
-  width: 100%;
-  height: 100%;
+  bottom: 0;
+  width: 26px;
+  height: 26px;;
   object-fit: contain;
   object-position: center;
 }
 
-.team img:hover{
+.team:hover img{
   cursor: pointer;
   transform: scale(1.15);
 }
@@ -363,17 +365,18 @@ hr{
 .sound{
   position: absolute;
   right: 122px;
-  bottom: -20px;
-  height: 26px;
+  bottom: 15px;
+  height: 52px;
   width: 26px;
 }
 
-.sound img:hover{
+.sound:hover img{
   cursor: pointer;
   transform: scale(1.15);
 }
 
 .sound img{
+  bottom: 0;
   width: 100%;
   height: 100%;
   object-fit: contain;
@@ -718,6 +721,7 @@ hr{
   width: 100%;
   display: flex;
   justify-content: center;
+  margin-bottom: 30vh;
 }
 
 .banner_boarder img{
@@ -774,20 +778,16 @@ hr{
 
 
 .lightbox_wrapper{
-  margin-left: auto;
-  margin-right: auto;
   position: absolute;
   background-color: #ffffff;
   width: 90%;
   height: 425px;
   padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
 }
 
-.infoBox_wrapper{
-  width: calc(100% - 48px);
-  margin-left: auto;
-  margin-right: auto;
-}
 
 .infoBox_wrapper h3{
   text-align: center;
@@ -803,9 +803,13 @@ hr{
 }
 
 .infoBox-content{
+  height: 55%;
   color: #2d5576;
   font-size: 18px;
   margin-top: 24px;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 .infoBox-content div{
@@ -850,26 +854,83 @@ hr{
   cursor: pointer;
 }
 
+.boxTextCenter{
+  text-align: center;
+}
+
 #infoBox-1{
   position: absolute;
-  left: 12px;
+  left: 24px;
   background-color: #fff;
   max-height: 500px;
   height: 100%;
   width: calc(100% - 48px);
-  overflow-y: scroll;
-  scroll-behavior: smooth;
 }
 
 #infoBox-2{
-  width: 100%;
   position: absolute;
-  top: 0px;
-  left: 0px;
+  left: 24px;
   background-color: #fff;
-  height: 600px;
-  overflow-y: scroll;
-  scroll-behavior: smooth;
+  max-height: 500px;
+  height: 100%;
+  width: calc(100% - 48px);
+
+}
+
+#infoBox-2 .infoRow{
+  justify-content:center;
+
+}
+
+#infoBox-2 .infovalue{
+  min-width:35px;
+}
+
+#infoBox-2 .infoCategory{
+  min-width:75%;
+}
+
+#myChart{
+  margin-top: 36px;
+}
+
+#infoBox-3{
+  position: absolute;
+  left: 24px;
+  background-color: #fff;
+  max-height: 500px;
+  height: 100%;
+  width: calc(100% - 48px);
+}
+
+.infoBox-content ul{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-block-start: 0px;
+  margin-block-end: 0px;
+  padding-inline-start: 0px;
+  list-style: none;
+  background-color: white;
+}
+
+.infoBox-content li{
+  color: white;;
+  margin: 5px;
+  padding: 5px 8px;
+  border-radius: 8px;
+  background-color: #b9bac2;
+  list-style: none;
+}
+
+#infoBox-4{
+  position: absolute;
+  left: 24px;
+  background-color: #fff;
+  max-height: 500px;
+  height: 100%;
+  width: calc(100% - 48px);
+
 }
 
 .showIndfoAnimation{
@@ -884,9 +945,37 @@ hr{
   transition: translate 1.235s ease-in;
 }
 
-#myChart{
-  height: 650px
+.centerContent{
+  display: flex;
+  flex-direction: column;
+  margin-right: auto;
+  margin-left: auto;
+  align-items: center;
 }
+
+
+
+.slide-in-right {
+	-webkit-animation: slide-in-right 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+	        animation: slide-in-right 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+.slide-out-left {
+	-webkit-animation: slide-out-left 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+	        animation: slide-out-left 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+}
+
+
+#positionUpper{
+  opacity: 1;
+  position: absolute;
+}
+
+#positionBelow{
+  opacity: 1;
+  position: absolute;
+}
+
 
 
 /* ----------------------------------------------
@@ -952,15 +1041,94 @@ hr{
   }
 }
 
+/**
+ * ----------------------------------------
+ * animation slide-in-right
+ * ----------------------------------------
+ */
+ @-webkit-keyframes slide-in-right {
+  0% {
+    -webkit-transform: translateX(1000px);
+            transform: translateX(1000px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes slide-in-right {
+  0% {
+    -webkit-transform: translateX(1000px);
+            transform: translateX(1000px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/**
+ * ----------------------------------------
+ * animation slide-out-left
+ * ----------------------------------------
+ */
+ @-webkit-keyframes slide-out-left {
+  0% {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: translateX(-1000px);
+            transform: translateX(-1000px);
+    opacity: 0;
+  }
+}
+@keyframes slide-out-left {
+  0% {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: translateX(-1000px);
+            transform: translateX(-1000px);
+    opacity: 0;
+  }
+}
+
+
  @media(max-width: 1125px){
-  .banner_boarder img{
+  .banner_boarder img {
     width: 100%;
+    min-height: 250px;
+    border-radius: 0;
+    object-fit: cover;
+    object-position: center;
+    border-right: none;
+    border-left: none;
+  }
+}
+
+@media(max-width: 750px){
+  .banner_boarder img {
+    width: 375px;
+    min-height: 250px;
+    border-radius: 0;
+    object-fit: cover;
+    object-position: -50px;
+    border: 10px solid white;
+    border-radius: 20px;
   }
 
-  #banner .content_wrapper{
-    max-width: 90%;
+  .banner_boarder{
+  margin-bottom: 250px;
   }
-  }
+}
 
 
 @media(max-width: 570px){
@@ -968,6 +1136,7 @@ hr{
     height: 150px;
     flex-direction: column;
   }
+  
   .background{
     top: auto;
     bottom: 0px;
@@ -987,20 +1156,6 @@ hr{
     padding-left: 0px;
   }
 
-  #banner{
-    margin-top: 248px;
-  }
-
-  #banner .content_wrapper{
-    max-width: 90%;
-  }
-
-  #banner img{
-    height:46vw;
-    object-fit: cover;
-    object-position: left;
-  }
-
   .whiteSpace{
     text-align: center;
     flex-direction: column;
@@ -1010,9 +1165,26 @@ hr{
     margin: 8px 0px;
 
   }
+
+  .banner_boarder{
+    margin-top:78px;
+    margin-bottom: 250px;
+    }
 }
 
-@media(max-width: 400px){
+@media(max-width: 470px){
+  .boxheadid{
+    top: 175px;
+    right: 0;
+    left: 25px;
+  }
+
+  #infoBox-2 .infoCategory{
+    min-width:45%;
+  }
+}
+
+@media(max-width: 450px){
 
 
   #banner{
@@ -1029,6 +1201,19 @@ hr{
   padding: 8px 16px
   }
 
+  .banner_boarder{
+    margin-top:0px;
+    margin-bottom: 0px;
+    }
+
+}
+
+@media(max-width: 380px){
+
+  .infoBox-content{
+    height: 40%;
+  }
+
 }
 
 @media(max-height: 825px){
@@ -1036,3 +1221,7 @@ hr{
     width: 24vh;
   }
 }
+
+
+
+

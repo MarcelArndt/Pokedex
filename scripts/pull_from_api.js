@@ -27,6 +27,7 @@ async function getAdditionInfos(id){
     response = await response.json();
     await getGermanName(id, response);
     await getSpecies(id, response);
+    await getInfoText(id, response);
 }
 
 
@@ -39,14 +40,27 @@ async function buildBaseStrukture(id){
     await getHight(id, response);
     await getWeight(id, response);
     await getSkills(id, response);
+    await getMoves(id, response);
+    await getStats(id, response);
     await buildNumber(id);
     await buildColorTheme(id);
+
 }
 
 
 async function getAudio(id, fetchData){
     let audio = fetchData["cries"]["latest"];
     let newObject = {"audio": audio};
+    Object.assign(loadedPokeArray[id-1], newObject);
+}
+
+async function getStats(id, fetchData){
+   let valueSummary = []
+    for (let i=0; i < fetchData["stats"].length; i++){
+        let getValue = fetchData["stats"][i]["base_stat"]
+        valueSummary.push(getValue);
+    }
+    let newObject = {"stats": valueSummary};
     Object.assign(loadedPokeArray[id-1], newObject);
 }
 
@@ -65,6 +79,32 @@ async function getSpecies(id, fetchData){
 }
 
 
+async function getInfoText(id, fetchData){
+    let getMyText = "";
+    for(i = 0; i < fetchData["flavor_text_entries"].length; i++){
+     let getlanguage = await fetchData["flavor_text_entries"][i]["language"]["name"];
+        if(getlanguage == "de"){
+        getMyText = fetchData["flavor_text_entries"][i]["flavor_text"];
+        break;
+    }
+    }
+    let newObject = {infoText: getMyText};
+    Object.assign(loadedPokeArray[id-1], newObject);
+}
+
+
+async function getMoves(id, fetchData){
+    moveSummary = [];
+    for(i = 0; i < fetchData["moves"].length; i++){
+        let getMove = await fetchData["moves"][i]["move"]["name"];
+        let toTitleName = toTitleWord(getMove);
+        moveSummary.push(toTitleName);
+    }
+    let newObject = {attacks: moveSummary};
+    Object.assign(loadedPokeArray[id-1], newObject);
+}
+
+
 async function getHight(id, fetchData){
     let height = fetchData["height"];
     let text = `Bis zu ${height*10} cm od. ${Math.round(height*3.973)} inch groß.`;
@@ -78,7 +118,7 @@ async function getWeight(id, fetchData){
     let weight = fetchData["weight"];
     let text = `Bis zu ${weight/10} Kg od. ${Math.round(weight/4.536)} Pfund schwer.`;
     let newObject = {weight: weight,
-                     textForHeight: text};
+                     textForWeight: text};
     Object.assign(loadedPokeArray[id-1], newObject)
 }
 

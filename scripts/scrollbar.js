@@ -47,5 +47,4 @@ function moveLeft(){
         buttonImageRight.classList.remove("minus_opacity");
         buttonImageRightMobil.classList.remove("minus_opacity");
     }
-
 }

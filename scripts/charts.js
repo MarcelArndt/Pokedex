@@ -1,13 +1,13 @@
-function createChart(){
-const ctx = document.getElementById('myChart');
+function createChart(id){
+  try{const ctx = document.getElementById('myChart');
   new Chart(ctx, {
     type: 'radar',
     data: {
-      labels: ['HP', 'Attack', 'Defence', 'Special-Attack', 'Special-Defense', 'Speed'],
+      labels: ['HP', 'Att.', 'Def.', 'Spc.Att.', 'Spc.Def.', 'Spe.'],
       datasets: [{
         label: 'Stats',
-        data: [39, 52, 43, 60, 50, 65],
-        backgroundColor: ['rgba(82, 136, 163, 0.5)','rgba(82, 136, 163, 0.5)','rgba(82, 136, 163, 0.5)','rgba(82, 136, 163, 0.5)','rgba(82, 136, 163, 0.5)','rgba(82, 136, 163, 0.5)'],
+        data: loadedPokeArray[id]["stats"],
+        backgroundColor: ['rgba(82, 136, 163, 0.7)','rgba(82, 136, 163, 0.7)','rgba(82, 136, 163, 0.7)','rgba(82, 136, 163, 0.7)','rgba(82, 136, 163, 0.7)','rgba(82, 136, 163, 0.7)'],
         borderWidth: 1
       }]
     },
@@ -18,7 +18,6 @@ const ctx = document.getElementById('myChart');
       plugins: {filler: {propagate: false}},
       interaction: {intersect: false},
       title: {display: false}
-
     }
-  });
+  });}catch{};
 }

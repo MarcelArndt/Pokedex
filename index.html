@@ -7,6 +7,7 @@
   <link type="text/css" rel="stylesheet" href="./style/fonts.css">
   <link type="text/css" rel="stylesheet" href="./style/style.css">
   <link type="text/css" rel="stylesheet" href="./style/scrollbar.css">
+  <link type="text/css" rel="stylesheet" href="./style/imageSlider.css">
   <link rel="icon" href="./img/favicon.ico" type="image/x-icon">
   <script src="./scripts/lightbox.js"></script>
   <script src="./scripts/template.js"></script>
@@ -15,6 +16,7 @@
   <script src="./scripts/script.js"></script>
   <script src="./scripts/pull_from_api.js"></script>
   <script src="./scripts/render_function.js"></script>
+  <script src="./scripts/imageslider.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
 <body onload="init()" onresize="checksize()" onscroll="oncheckscroll()">
@@ -23,7 +25,7 @@
     <div id="lightbox_content">
   </div>
 
-    <header id="navbar" >
+    <header id="navbar" Can_Be_Blur>
       <div class="content_wrapper">
         <div class="headarea">
         <div class="logo"><img src="./img/logo.png"></div>
@@ -34,10 +36,11 @@
     </header>
 
 
-    <section id="banner">
+    <section id="banner" Can_Be_Blur>
       <div class="content_wrapper">
         <div class="banner_boarder">
-          <img src="./img/banner/banner.png">
+          <img id="positionBelow" src="./img/banner/banner-3.png">
+          <img id="positionUpper" class="imageSliderfade-in" src="./img/banner/banner-2.png">
         </div>
       </div>
     </section>
@@ -45,8 +48,8 @@
 
 
     <section class="scrollmenu_mainwrapper">
-      <hr>
-      <div class="scrollmenu_wrapper">
+      <hr Can_Be_Blur>
+      <div id="scrollmenu" class="scrollmenu_wrapper" Can_Be_Blur>
         <div class="scrollmenu_padding">
         <nav class="scrollmenu">
           <div onclick="moveLeft()" class="left_arrow_scrollmenu"><img id="button_left" class="minus_opacity" src="./img/icons/chevron-left.png"></div>
@@ -83,12 +86,12 @@
         </div>  
         </div>
       </div> 
-      <hr>
+      <hr Can_Be_Blur>
     </section>
 
   <section>
     <div class="content_wrapper">
-      <div class="legende">
+      <div class="legende" Can_Be_Blur>
         <div class="whiteSpace"><div class="icon"><img src="./img/icons/star-fill.png"></div><div><span id="fav_number">0</span> Favoriten</div></div>
         <div class="whiteSpace"><div class="icon"><img src="./img/icons/pokeball_filled.png"></div><div><span id="caught_number">0</span> Gefangene Pokemon</div></div>
       </div>
@@ -97,7 +100,7 @@
 
     <section class="fgrow">
       <div class="content_wrapper">
-        <div id="content">     
+        <div id="content" Can_Be_Blur>     
         
       </div>
     </section>

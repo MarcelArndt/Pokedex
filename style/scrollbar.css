@@ -133,11 +133,18 @@
    }
 
 
-   .hiddeScrollbar::-webkit-scrollbar{
-    display: none;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+   .infoBox-content::-webkit-scrollbar{
+      width: 8px;
    }
+
+   .infoBox-content::-webkit-scrollbar-track {
+    background: #fff; 
+  }
+
+  .infoBox-content::-webkit-scrollbar-thumb {
+    background: #2d5576; 
+    border: none;
+  }
   
   .content_scrollmenu li{
     user-select: none;
